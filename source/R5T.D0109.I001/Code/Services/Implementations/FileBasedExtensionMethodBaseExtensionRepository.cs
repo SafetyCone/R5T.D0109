@@ -279,7 +279,7 @@ namespace R5T.D0109.I001
             var ignoredExtensionMethodBaseNamesTextFilepath = await this.ExtensionMethodBaseExtensionRepositoryFilePathsProvider.GetIgnoredExtensionMethodBaseNamesTextFilePath();
 
             var ignoredNames = Instances.FileSystemOperator.FileExists(ignoredExtensionMethodBaseNamesTextFilepath)
-                ? Instances.IgnoredValuesOperator.LoadIgnoredValues(ignoredExtensionMethodBaseNamesTextFilepath)
+                ? await Instances.IgnoredValuesOperator.LoadIgnoredValues(ignoredExtensionMethodBaseNamesTextFilepath)
                 : new HashSet<string>()
                 ;
 
@@ -291,7 +291,7 @@ namespace R5T.D0109.I001
         {
             var ignoredNamesTextFilepath = await this.ExtensionMethodBaseExtensionRepositoryFilePathsProvider.GetIgnoredExtensionMethodBaseNamesTextFilePath();
 
-            Instances.IgnoredValuesOperator.SaveIgnoredValues(
+            await Instances.IgnoredValuesOperator.SaveIgnoredValues(
                 ignoredNamesTextFilepath,
                 ignoredExtenionMethodBaseNamespacedTypeNames
                     .OrderAlphabetically());
@@ -303,7 +303,7 @@ namespace R5T.D0109.I001
 
             // File is formatted as {extension method base extension namespaced, typed, parameterized method name}| {identity}, which while inconvenient for human analysis, is required since code file path is not unique. (TODO: provide some other file export of this data.)
             var duplicateSelectionValues = Instances.FileSystemOperator.FileExists(duplicateNameSelectionsTextFilePath)
-                ? Instances.DuplicateValuesOperator.LoadDuplicateValueSelections(duplicateNameSelectionsTextFilePath)
+                ? await Instances.DuplicateValuesOperator.LoadDuplicateValueSelections(duplicateNameSelectionsTextFilePath)
                 : new Dictionary<string, string>()
                 ;
 
@@ -330,7 +330,7 @@ namespace R5T.D0109.I001
                     x => x.ExtensionMethodBaseExtensionNamespacedTypedParameterizedMethodName,
                     x => Instances.GuidOperator.ToStringStandard(x.ExtensionMethodBaseExtensionIdentity));
 
-            Instances.DuplicateValuesOperator.SaveDuplicateValueSelections(
+            await Instances.DuplicateValuesOperator.SaveDuplicateValueSelections(
                 duplicateNameSelectionsTextFilePath,
                 duplicateSelections);
         }
@@ -341,7 +341,7 @@ namespace R5T.D0109.I001
 
             // File is formatted as {extension method base extension namespaced, typed, parameterized method name}| {identity}, which while inconvenient for human analysis, is required since code file path is not unique. (TODO: provide some other file export of this data.)
             var selectionValues = Instances.FileSystemOperator.FileExists(nameSelectionsTextFilePath)
-                ? Instances.DuplicateValuesOperator.LoadDuplicateValueSelections(nameSelectionsTextFilePath)
+                ? await Instances.DuplicateValuesOperator.LoadDuplicateValueSelections(nameSelectionsTextFilePath)
                 : new Dictionary<string, string>()
                 ;
 
@@ -368,7 +368,7 @@ namespace R5T.D0109.I001
                     x => x.ExtensionMethodBaseExtensionNamespacedTypedParameterizedMethodName,
                     x => Instances.GuidOperator.ToStringStandard(x.ExtensionMethodBaseExtensionIdentity));
 
-            Instances.DuplicateValuesOperator.SaveDuplicateValueSelections(
+            await Instances.DuplicateValuesOperator.SaveDuplicateValueSelections(
                 nameSelectionsTextFilePath,
                 selections);
         }

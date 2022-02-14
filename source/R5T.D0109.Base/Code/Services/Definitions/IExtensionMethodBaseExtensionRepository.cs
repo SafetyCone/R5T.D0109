@@ -169,7 +169,8 @@ namespace R5T.D0109
         /// <summary>
         /// Extension method base extension identity is unique.
         /// </summary>
-        Task<WasFound<ExtensionMethodBaseExtensionToExtensionMethodBaseMapping>> HasToExtensionMethodBaseMappingByExtensionMethodBaseExtensionIdentity(Guid extensionMethodBaseExtensionIdentity);
+        Task<WasFound<ExtensionMethodBaseExtensionToExtensionMethodBaseMapping>> HasToExtensionMethodBaseMappingByExtensionMethodBaseExtensionIdentity(
+            Guid extensionMethodBaseExtensionIdentity);
 
         /// <summary>
         /// Extension method base identity is not unique. (There can, of course, be multiple extension method base extensions for an extension method base.)

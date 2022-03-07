@@ -138,6 +138,9 @@ namespace R5T.D0109
         /// </summary>
         Task<WasFound<ExtensionMethodBaseExtensionToProjectMapping>> HasToProjectMappingByExtensionMethodBaseExtension(Guid extensionMethodBaseExtensionIdentity);
 
+        Task<Dictionary<Guid, WasFound<ExtensionMethodBaseExtensionToProjectMapping>>> HasToProjectMappingsByExtensionMethodBaseExtension(
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities);
+
         /// <summary>
         /// Project identity is not unique. (There can be multiple extension method bases in a single project.)
         /// </summary>
@@ -171,6 +174,9 @@ namespace R5T.D0109
         /// </summary>
         Task<WasFound<ExtensionMethodBaseExtensionToExtensionMethodBaseMapping>> HasToExtensionMethodBaseMappingByExtensionMethodBaseExtensionIdentity(
             Guid extensionMethodBaseExtensionIdentity);
+
+        Task<Dictionary<Guid, WasFound<ExtensionMethodBaseExtensionToExtensionMethodBaseMapping>>> HasToExtensionMethodBaseMappingsByExtensionMethodBaseExtensionIdentity(
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities);
 
         /// <summary>
         /// Extension method base identity is not unique. (There can, of course, be multiple extension method base extensions for an extension method base.)

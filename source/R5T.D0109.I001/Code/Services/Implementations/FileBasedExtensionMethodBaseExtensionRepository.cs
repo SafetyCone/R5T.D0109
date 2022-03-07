@@ -801,6 +801,14 @@ namespace R5T.D0109.I001
             return output;
         }
 
+        public async Task<Dictionary<Guid, WasFound<ExtensionMethodBaseExtensionToProjectMapping>>> HasToProjectMappingsByExtensionMethodBaseExtension(IEnumerable<Guid> extensionMethodBaseExtensionIdentities)
+        {
+            var toProjectMappings = await this.LoadToProjectMappings();
+
+            var output = toProjectMappings.FindDictionaryByLocalIdentity(extensionMethodBaseExtensionIdentities);
+            return output;
+        }
+
         public async Task<ExtensionMethodBaseExtensionToProjectMapping[]> HasToProjectMappingsByProject(Guid projectIdentity)
         {
             var toProjectMappings = await this.LoadToProjectMappings();
@@ -907,6 +915,15 @@ namespace R5T.D0109.I001
             var toExtensionMethodBaseMappings = await this.LoadToExtensionMethodBaseMappings();
 
             var output = FileBasedExtensionMethodBaseExtensionRepository.HasToExtensionMethodBaseMapping(toExtensionMethodBaseMappings, mapping);
+            return output;
+        }
+
+        public async Task<Dictionary<Guid, WasFound<ExtensionMethodBaseExtensionToExtensionMethodBaseMapping>>> HasToExtensionMethodBaseMappingsByExtensionMethodBaseExtensionIdentity(
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities)
+        {
+            var toExtensionMethodBaseMappings = await this.LoadToExtensionMethodBaseMappings();
+
+            var output = toExtensionMethodBaseMappings.FindDictionaryByLocalIdentity(extensionMethodBaseExtensionIdentities);
             return output;
         }
 

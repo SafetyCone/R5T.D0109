@@ -72,6 +72,25 @@ namespace System
             return output;
         }
 
+        public static async Task<Dictionary<Guid, Guid>> GetProjectIdentitiesForExtensionMethodBaseExtensions(this IExtensionMethodBaseExtensionRepository extensionMethodBaseExtensionRepository,
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities)
+        {
+            var hasProjectIdentityForExtensionMethodBaseExtension = await extensionMethodBaseExtensionRepository
+                .HasProjectIdentitiesForExtensionMethodBaseExtensions(extensionMethodBaseExtensionIdentities);
+
+            if (hasProjectIdentityForExtensionMethodBaseExtension.AnyNotFound())
+            {
+                throw new Exception("No project found for some extension method base extension identities.");
+            }
+
+            var output = hasProjectIdentityForExtensionMethodBaseExtension
+                .ToDictionary(
+                    x => x.Key,
+                    x => x.Value.Result);
+
+            return output;
+        }
+
         public static async Task<WasFound<Guid>> HasExtensionMethodBaseIdentityForExtensionMethodBaseExtension(this IExtensionMethodBaseExtensionRepository extensionMethodBaseExtensionRepository,
             Guid extensionMethodBaseExtensionIdentity)
         {
@@ -85,6 +104,20 @@ namespace System
             return output;
         }
 
+        public static async Task<Dictionary<Guid, WasFound<Guid>>> HasExtensionMethodBaseIdentitiesForExtensionMethodBaseExtensions(this IExtensionMethodBaseExtensionRepository extensionMethodBaseExtensionRepository,
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities)
+        {
+            var hasToExtensionMethodBaseMappings = await extensionMethodBaseExtensionRepository.HasToExtensionMethodBaseMappingsByExtensionMethodBaseExtensionIdentity(extensionMethodBaseExtensionIdentities);
+
+            var output = hasToExtensionMethodBaseMappings.ToDictionary(
+                xPair => xPair.Key,
+                xPair => WasFound.From(
+                    xPair.Value.Exists,
+                    xPair.Value.Result.ExtensionMethodBaseIdentity));
+
+            return output;
+        }
+
         public static async Task<WasFound<Guid>> HasProjectIdentityForExtensionMethodBaseExtension(this IExtensionMethodBaseExtensionRepository extensionMethodBaseExtensionRepository,
             Guid extensionMethodBaseExtensionIdentity)
         {
@@ -95,6 +128,21 @@ namespace System
             }
 
             var output = WasFound.From(hasToProjectMapping.Result.ProjectIdentity);
+            return output;
+        }
+
+        public static async Task<Dictionary<Guid, WasFound<Guid>>> HasProjectIdentitiesForExtensionMethodBaseExtensions(this IExtensionMethodBaseExtensionRepository extensionMethodBaseExtensionRepository,
+            IEnumerable<Guid> extensionMethodBaseExtensionIdentities)
+        {
+            var hasToProjectMappingsByExtensionMethodBaseExtensions = await extensionMethodBaseExtensionRepository.HasToProjectMappingsByExtensionMethodBaseExtension(extensionMethodBaseExtensionIdentities);
+
+            var output = hasToProjectMappingsByExtensionMethodBaseExtensions
+                .ToDictionary(
+                    x => x.Key,
+                    x => WasFound.From(
+                        x.Value.Exists,
+                        x.Value.Result.ProjectIdentity));
+
             return output;
         }
     }
